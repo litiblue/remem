@@ -71,7 +71,7 @@ class SentenceListMaker(object):
 
     def append_sentences(self, out_file, sentences):
        for sentence_tup in sentences:
-           out_file.write(u','.join(sentence_tup).encode('utf-8')+'\n')
+           out_file.write(u'\t'.join(sentence_tup).encode('utf-8')+'\n')
 
     def run(self, in_name, out_name):
         with open(in_name, 'r') as in_file, open(out_name, 'w') as out_file:
