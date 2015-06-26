@@ -33,8 +33,8 @@ ReactMeteor.createClass({
     }
     else if (click_level == "low") {
       recall_level -= 1;
-      if (recall_level === 0) {
-        recall_level = 1;
+      if (recall_level < 0) {
+        recall_level = 0;
       }
     }
     console.log('bbb:'+recall_level);
@@ -42,7 +42,9 @@ ReactMeteor.createClass({
     // Calculate next time by recall_level.
     var now = moment();
     var next_time = null;
-    if (recall_level == 1) {
+    if (recall_level === 0) {
+      next_time = now.add(5, 'minutes');
+    } else if (recall_level == 1) {
       next_time = now.add(10, 'minutes');
     } else if (recall_level == 2) {
       next_time = now.add(1, 'days');
