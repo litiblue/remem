@@ -23,23 +23,51 @@ ReactMeteor.createClass({
     this.setState({step: 2});
   },
 
-  levelClick: function(level) {
-    console.log("level click!");
-    console.log(level);
+  getNextTime: function(click_level) {
+    var recall_level = this.state.problem.recall_level;
 
-    var _probability = problem.probability;
-
-    if (level == "high") {
-      _probability = 0;
-    } else if (level == "middle") {
-      _probability += 1;
-    } else if (level == "low") {
-      _probability += 2;
+    // Adjust recal_level by click_level.
+    console.log('aaa:'+recall_level);
+    if (click_level == "high") {
+      recall_level += 1;
     }
+    else if (click_level == "low") {
+      recall_level -= 1;
+      if (recall_level === 0) {
+        recall_level = 1;
+      }
+    }
+    console.log('bbb:'+recall_level);
+
+    // Calculate next time by recall_level.
+    var now = moment();
+    var next_time = null;
+    if (recall_level == 1) {
+      next_time = now.add(10, 'minutes');
+    } else if (recall_level == 2) {
+      next_time = now.add(1, 'days');
+    } else if (recall_level == 3) {
+      next_time = now.add(7, 'days');
+    } else if (recall_level == 4) {
+      next_time = now.add(30, 'days');
+    }
+
+    return {recall_level: recall_level, next_time:next_time};
+  },
+
+  levelClick: function(click_level) {
+    console.log("level click!");
+    console.log(click_level);
+
+    var ret = this.getNextTime(click_level);
+    console.log(ret.recall_level);
+    console.log(ret.next_time);
 
     ProblemList.update(
       {_id:this.state.problem._id},
-      {$set: {probability:_probability}});
+      {$set: {
+        recall_level:ret.recall_level,
+        next_time:moment(ret.next_time).toDate() }});
 
     this.setState({step: 1});
   },
