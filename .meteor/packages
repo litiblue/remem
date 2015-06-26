@@ -12,3 +12,4 @@ iron:router
 
 npm-container
 bigblue:meteor-react-bootstrap
+momentjs:moment
