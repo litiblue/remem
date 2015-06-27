@@ -6,7 +6,7 @@ db = client.meteor
 
 def insert_problem(eng_sentence, kr_sentence):
     problem = {"question": kr_sentence, "answer": eng_sentence, \
-                "last_time": None, "recall_level": 0, \
+                "is_first": True, "recall_level": 0, \
                 "next_time": datetime.utcnow()}
 
     db.problem_list.insert_one(problem)

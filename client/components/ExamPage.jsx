@@ -3,7 +3,6 @@ ReactMeteor.createClass({
   templateName: "ExamPage",
 
   startMeteorSubscriptions: function() {
-    console.log('getMeteorSubscriptions');
     Meteor.subscribe("problemList");
   },
 
@@ -12,14 +11,12 @@ ReactMeteor.createClass({
   },
 
   getMeteorState: function() {
-    console.log('getMeteorState');
     return {
       problem: ProblemList.findOne()
     };
   },
 
   nextClick: function(event) {
-    console.log("next click!");
     this.setState({step: 2});
   },
 
@@ -27,7 +24,6 @@ ReactMeteor.createClass({
     var recall_level = this.state.problem.recall_level;
 
     // Adjust recal_level by click_level.
-    console.log('aaa:'+recall_level);
     if (click_level == "high") {
       recall_level += 1;
     }
@@ -37,7 +33,6 @@ ReactMeteor.createClass({
         recall_level = 0;
       }
     }
-    console.log('bbb:'+recall_level);
 
     // Calculate next time by recall_level.
     var now = moment();
@@ -58,18 +53,15 @@ ReactMeteor.createClass({
   },
 
   levelClick: function(click_level) {
-    console.log("level click!");
-    console.log(click_level);
 
     var ret = this.getNextTime(click_level);
-    console.log(ret.recall_level);
-    console.log(ret.next_time);
 
     ProblemList.update(
       {_id:this.state.problem._id},
       {$set: {
-        recall_level:ret.recall_level,
-        next_time:moment(ret.next_time).toDate() }});
+        is_first: false,
+        recall_level: ret.recall_level,
+        next_time: moment(ret.next_time).toDate() }});
 
     this.setState({step: 1});
   },
