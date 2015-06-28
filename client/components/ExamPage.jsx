@@ -11,8 +11,15 @@ ReactMeteor.createClass({
   },
 
   getMeteorState: function() {
+    console.log("getMeteorState!");
+    var _problem = ProblemList.findOne({
+      next_time: { $lte: new Date() }}, {
+      //
+      sort: {is_first: 1, next_time: 1}
+    });
+
     return {
-      problem: ProblemList.findOne()
+      problem: _problem
     };
   },
 
