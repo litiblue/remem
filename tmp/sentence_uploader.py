@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 
-client = MongoClient("mongodb://localhost:3001/")
+client = MongoClient("mongodb://172.17.0.42:27017/")
 db = client.meteor
 
 def insert_problem(eng_sentence, kr_sentence):
