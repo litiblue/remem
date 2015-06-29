@@ -3,11 +3,11 @@ ReactMeteor.createClass({
   templateName: "ExamPage",
 
   startMeteorSubscriptions: function() {
-    Meteor.subscribe("problemList");
+    Meteor.subscribe("problemList", this.state.problem_cnt);
   },
 
   getInitialState: function() {
-    return {step: 1};
+    return {step: 1, problem_cnt: 1};
   },
 
   getMeteorState: function() {
@@ -71,6 +71,7 @@ ReactMeteor.createClass({
         next_time: moment(ret.next_time).toDate() }});
 
     this.setState({step: 1});
+    this.setState({problem_cnt: this.state.problem_cnt+1});
   },
 
   render: function() {
